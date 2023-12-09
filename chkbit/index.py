@@ -60,6 +60,8 @@ class Index:
     # calc new hashes for this index
     def update(self, context):
         for name in self.files:
+            if context.only_new and name in self.old:
+                continue
             if self.should_ignore(name):
                 self._log(Stat.SKIP, name)
                 continue

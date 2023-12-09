@@ -64,6 +64,13 @@ class Main:
         )
 
         parser.add_argument(
+            "-n",
+            "--only-new",
+            action="store_true", 
+            help="only add new files to the indices (will not verify files existing files)",
+        )
+
+        parser.add_argument(
             "-f", "--force", action="store_true", help="force update of damaged items"
         )
 
@@ -130,6 +137,7 @@ class Main:
             self.args.update,
             self.args.force,
             self.args.skip_symlinks,
+            self.args.only_new,
         )
 
         # start indexing
