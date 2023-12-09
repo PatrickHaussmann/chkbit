@@ -64,13 +64,6 @@ class Main:
         )
 
         parser.add_argument(
-            "--algo",
-            type=str,
-            default="md5",
-            help="hash algorithm: md5, sha512",
-        )
-
-        parser.add_argument(
             "-f", "--force", action="store_true", help="force update of damaged items"
         )
 
@@ -136,7 +129,6 @@ class Main:
             self.args.verify_index,
             self.args.update,
             self.args.force,
-            self.args.algo,
             self.args.skip_symlinks,
         )
 

@@ -64,7 +64,7 @@ class Index:
                 self._log(Stat.SKIP, name)
                 continue
 
-            a = context.hash_algo
+            a = "sha256"
             # check previously used hash
             if name in self.old:
                 old = self.old[name]
@@ -73,7 +73,7 @@ class Index:
                     self.old[name] = {"mod": old["mod"], "a": a, "h": old["md5"]}
                 elif "a" in old:
                     a = old["a"]
-            self.new[name] = self._calc_file(name, a)
+            self.new[name] = self._calc_file(name)
 
     # check/update the index (old vs new)
     def check_fix(self, force):
@@ -111,11 +111,11 @@ class Index:
                 self._log(Stat.WARN_OLD, name)
                 self._setmod()
 
-    def _calc_file(self, name, a):
+    def _calc_file(self, name):
         path = os.path.join(self.path, name)
         info = os.stat(path)
         mtime = int(info.st_mtime * 1000)
-        return {"mod": mtime, "a": a, "h": hashfile(path, a)}
+        return {"mod": mtime, "a": "sha256", "h": hashfile(path, a)}
 
     def save(self):
         if self.modified:
