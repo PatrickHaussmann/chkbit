@@ -6,7 +6,7 @@ import json
 from enum import Enum
 from chkbit import hashfile, hashtext
 
-VERSION = 2  # index version
+VERSION = 3  # index version
 INDEX = ".chkbit"
 IGNORE = ".chkbitignore"
 
@@ -63,16 +63,7 @@ class Index:
             if self.should_ignore(name):
                 self._log(Stat.SKIP, name)
                 continue
-
-            a = "sha256"
-            # check previously used hash
-            if name in self.old:
-                old = self.old[name]
-                if "md5" in old:
-                    a = "md5"  # legacy structure
-                    self.old[name] = {"mod": old["mod"], "a": a, "h": old["md5"]}
-                elif "a" in old:
-                    a = old["a"]
+            
             self.new[name] = self._calc_file(name)
 
     # check/update the index (old vs new)
@@ -115,16 +106,16 @@ class Index:
         path = os.path.join(self.path, name)
         info = os.stat(path)
         mtime = int(info.st_mtime * 1000)
-        return {"mod": mtime, "a": "sha256", "h": hashfile(path, a)}
+        return {"mtime": mtime, "hash": hashfile(path)}
 
     def save(self):
         if self.modified:
-            data = {"v": VERSION, "idx": self.new}
+            data = {"v": VERSION, "files": self.new, "mtime": int(time.time() * 1000)}
             text = json.dumps(self.new, separators=(",", ":"))
-            data["idx_hash"] = hashtext(text)
+            data["files_hash"] = hashtext(text)
 
             with open(self.idx_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, separators=(",", ":"))
+                json.dump(data, f, separators=(",", ":"), indent=4)
             self.modified = False
             return True
         else:
@@ -136,20 +127,19 @@ class Index:
         self.modified = False
         with open(self.idx_file, "r", encoding="utf-8") as f:
             data = json.load(f)
-            if "data" in data:
-                # extract old format from js version
-                for item in json.loads(data["data"]):
-                    self.old[item["name"]] = {
-                        "mod": item["mod"],
-                        "a": "md5",
-                        "h": item["md5"],
-                    }
-            elif "idx" in data:
-                self.old = data["idx"]
-                text = json.dumps(self.old, separators=(",", ":"))
-                if data.get("idx_hash") != hashtext(text):
-                    self.modified = True
-                    self._log(Stat.ERR_IDX, self.idx_file)
+
+            if "v" in data and data["v"] != VERSION:
+                self._log(Stat.ERR_IDX, self.idx_file)
+                return False
+            
+            self.old = data["files"]
+            text = json.dumps(self.old, separators=(",", ":"))
+            if data.get("files_hash") != hashtext(text):
+                self.modified = True      
+
+            self.mtime = data.get("mtime")
+        
+        self._log(Stat.ERR_IDX, self.idx_file)  
         return True
 
     def load_ignore(self):
