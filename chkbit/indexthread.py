@@ -30,7 +30,7 @@ class IndexThread:
             path = os.path.join(parent, name)
             if name[0] == ".":
                 continue
-            if os.path.isdir(path):
+            if os.path.isdir(path) and not self.context.non_recursive:
                 if self.context.skip_symlinks and os.path.islink(path):
                     pass
                 else:

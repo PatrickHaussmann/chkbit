@@ -71,6 +71,14 @@ class Main:
         )
 
         parser.add_argument(
+            "-r",
+            "--non_recursive",
+            action="store_true",
+            help="do not recurse into subdirectories",
+        )
+
+
+        parser.add_argument(
             "-f", "--force", action="store_true", help="force update of damaged items"
         )
 
@@ -138,6 +146,7 @@ class Main:
             self.args.force,
             self.args.skip_symlinks,
             self.args.only_new,
+            self.args.non_recursive,
         )
 
         # start indexing
