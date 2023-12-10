@@ -145,7 +145,11 @@ class Main:
 
         # put the initial paths into the queue
         for path in self.args.paths:
-            todo_queue.put(path)
+            if os.path.isdir(path):
+                todo_queue.put(path)
+            else:
+                print(f"error: {path} is not a directory")
+                exit(1)
 
         context = Context(
             self.args.verify_index,
