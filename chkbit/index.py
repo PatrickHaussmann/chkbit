@@ -4,6 +4,7 @@ import subprocess
 import sys
 import json
 from enum import Enum
+import time
 from chkbit import hashfile, hashtext
 
 VERSION = 3  # index version
