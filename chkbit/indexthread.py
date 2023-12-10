@@ -1,5 +1,6 @@
 import os
 import sys
+import traceback
 import time
 import threading
 from chkbit import Index, Stat
@@ -75,5 +76,7 @@ class IndexThread:
             try:
                 self._process_root(parent)
             except Exception as e:
-                self._log(Stat.INTERNALEXCEPTION, f"{parent}: {e}")
+                print(e)
+                self._log(Stat.INTERNALEXCEPTION, f"{parent}: {e} ({type(e)})")
+                traceback.print_exc()
             self.todo_queue.task_done()
