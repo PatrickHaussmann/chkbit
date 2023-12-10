@@ -82,7 +82,7 @@ class Main:
             "--date",
             type=str,
             default="",
-            help="only verify/update indices updated before this date (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)",
+            help="only verify/update indices updated before this date (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS or mtimestamp)",
         )
 
         parser.add_argument(
