@@ -78,9 +78,9 @@ class Index:
 
             a = self.old[name]
             b = self.new[name]
-            amod = a["mod"]
-            bmod = b["mod"]
-            if a["h"] == b["h"]:
+            amod = a["mtime"]
+            bmod = b["mtime"]
+            if a["hash"] == b["hash"]:
                 # ok, if the content stays the same the mod time does not matter
                 self._log(Stat.OK, name)
                 if amod != bmod:
