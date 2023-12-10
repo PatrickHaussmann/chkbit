@@ -113,7 +113,12 @@ class Index:
 
     def save(self):
         if self.modified:
-            data = {"v": VERSION, "files": self.new, "mtime": int(time.time() * 1000)}
+            data = {
+                "v": VERSION,
+                "info": "https://github.com/PatrickHaussmann/chkbit",
+                "files": self.new,
+                "mtime": int(time.time() * 1000)
+                }
             text = json.dumps(self.new, separators=(",", ":"))
             data["files_hash"] = hashtext(text)
 
