@@ -144,10 +144,10 @@ class Index:
             text = json.dumps(self.old, separators=(",", ":"))
             if data.get("files_hash") != hashtext(text):
                 self.modified = True      
+                self._log(Stat.ERR_IDX, self.idx_file)  
 
             self.mtime = data.get("mtime")
         
-        self._log(Stat.ERR_IDX, self.idx_file)  
         return True
 
     def load_ignore(self):
