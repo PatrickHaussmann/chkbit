@@ -42,17 +42,23 @@ class IndexThread:
         e = Index(parent, files, log=self._log)
         if e.load() or not self.verify_index_only:
 
-            # calc the new hashes
-            e.update(self.context)
+            # check if the index is older than the date
+            if (self.context.check_date and e.mtime) and e.mtime > self.context.check_date:
+                self._log(Stat.SKIP, parent)
+                return
 
-            if not self.context.only_new:
-                # compare
-                e.check_fix(self.context.force)
+            else:
+                # calc the new hashes
+                e.update(self.context)
 
-            # save if update is set
-            if self.update:
-                if e.save():
-                    self._log(Stat.FLAG_MOD, "")
+                if not self.context.only_new:
+                    # compare
+                    e.check_fix(self.context.force)
+
+                # save if update is set
+                if self.update:
+                    if e.save():
+                        self._log(Stat.FLAG_MOD, "")
 
         # process subdirs
         for name in dirs:

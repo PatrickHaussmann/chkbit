@@ -77,6 +77,13 @@ class Main:
             help="do not recurse into subdirectories",
         )
 
+        parser.add_argument(
+            "-d",
+            "--date",
+            type=str,
+            default="",
+            help="only verify/update indices updated before this date (format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS)",
+        )
 
         parser.add_argument(
             "-f", "--force", action="store_true", help="force update of damaged items"
@@ -147,6 +154,7 @@ class Main:
             self.args.skip_symlinks,
             self.args.only_new,
             self.args.non_recursive,
+            self.args.date,
         )
 
         # start indexing
