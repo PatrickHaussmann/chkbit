@@ -123,7 +123,7 @@ class Index:
             data["files_hash"] = hashtext(text)
 
             with open(self.idx_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, separators=(",", ":"), indent=4)
+                json.dump(data, f, separators=(",", ":"))
             self.modified = False
             return True
         else:
