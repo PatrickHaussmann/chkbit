@@ -29,7 +29,7 @@ class IndexThread:
         # load files and subdirs
         for name in os.listdir(path=parent):
             path = os.path.join(parent, name)
-            if name[0] == ".":
+            if name == ".chkbit":
                 continue
             if os.path.isdir(path) and not self.context.non_recursive:
                 if self.context.skip_symlinks and os.path.islink(path):
