@@ -47,7 +47,7 @@ class Main:
 
     def _parse_args(self):
         parser = argparse.ArgumentParser(
-            description="Checks the data integrity of your files. See https://github.com/laktak/chkbit-py",
+            description="Checks the data integrity of your files. See https://github.com/PatrickHaussmann/chkbit",
             epilog=STATUS_CODES,
             formatter_class=argparse.RawDescriptionHelpFormatter,
         )
