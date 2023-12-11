@@ -20,11 +20,11 @@ class Context:
 
             # YYYY-MM-DD
             elif re.match(r"^\d{4}-\d{2}-\d{2}$", check_date):
-                self.check_date = datetime.datetime.strptime(check_date, "%Y-%m-%d").timestamp() * 1000
+                self.check_date = int(datetime.datetime.strptime(check_date, "%Y-%m-%d").timestamp() * 1000)
 
             # YYYY-MM-DD HH:MM:SS
             elif re.match(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$", check_date):
-                self.check_date = datetime.datetime.strptime(check_date, "%Y-%m-%d %H:%M:%S").timestamp() * 1000
+                self.check_date = int(datetime.datetime.strptime(check_date, "%Y-%m-%d %H:%M:%S").timestamp() * 1000)
 
             else:
                 print("invalid date format")
