@@ -36,6 +36,7 @@ class Index:
         self.updates = []
         self.modified = True
         self.log = log
+        self.mtime = None
 
     @property
     def ignore_file(self):
