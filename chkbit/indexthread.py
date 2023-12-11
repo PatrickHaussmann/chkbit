@@ -46,7 +46,6 @@ class IndexThread:
             # check if the index is older than the date
             if (self.context.check_date and e.mtime) and e.mtime > self.context.check_date:
                 self._log(Stat.SKIP, parent)
-                return
 
             else:
                 # calc the new hashes
