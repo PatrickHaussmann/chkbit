@@ -72,7 +72,7 @@ class Index:
             self.new[name] = self._calc_file(name)
 
     # check/update the index (old vs new)
-    def check_fix(self, force):
+    def check_fix(self, context):
         for name in self.new.keys():
             if not name in self.old:
                 self._log(Stat.NEW, name)
@@ -96,7 +96,7 @@ class Index:
                 self._log(Stat.ERR_DMG, name)
                 # replace with old so we don't loose the information on the next run
                 # unless force is set
-                if not force:
+                if not context.force:
                     self.new[name] = a
                 else:
                     self._setmod()

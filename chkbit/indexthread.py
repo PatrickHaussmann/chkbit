@@ -52,7 +52,7 @@ class IndexThread:
                 e.update(self.context)
 
                 # compare
-                e.check_fix(self.context.force)
+                e.check_fix(self.context)
 
                 # save if update is set
                 if self.update:
