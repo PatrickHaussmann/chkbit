@@ -63,6 +63,7 @@ class Index:
     def update(self, context):
         for name in self.files:
             if context.only_new and name in self.old:
+                self.new[name] = self.old[name]
                 continue
             if self.should_ignore(name):
                 self._log(Stat.SKIP, name)
@@ -84,7 +85,8 @@ class Index:
             bmod = b["mtime"]
             if a["hash"] == b["hash"]:
                 # ok, if the content stays the same the mod time does not matter
-                self._log(Stat.OK, name)
+                if not context.only_new:
+                    self._log(Stat.OK, name)
                 if amod != bmod:
                     self._setmod()
                 continue

@@ -51,9 +51,8 @@ class IndexThread:
                 # calc the new hashes
                 e.update(self.context)
 
-                if not self.context.only_new:
-                    # compare
-                    e.check_fix(self.context.force)
+                # compare
+                e.check_fix(self.context.force)
 
                 # save if update is set
                 if self.update:
