@@ -1,9 +1,4 @@
-#!/usr/bin/env python
-import sys
-
-if sys.version_info < (3, 6):
-    sys.exit("Python < 3.6 is not supported")
-
+#!/usr/bin/env python3
 from chkbit.main import main
 
 main()
